@@ -4,25 +4,36 @@ require 'json'
 require 'csv'
 require './api_helper'
 
+csv_data=CSV.read('coinsecrets.csv');
+csv_data.each{|l| l.shift};
+headers = ["block", "time", "Factom", "unknown", "Ascribe", "Open Assets", "Proof of Existence", "Monegraph", "Eternity Wall", "BlockSign", "Colu", "Omni Layer", "Stampery", "Remembr", "Bitproof", "Blockstore", "CoinSpark", "stampd"]
+CSV.open('coinsecrets.tsv',"wb",col_sep: ",") do |csv|
+	csv << headers
+	csv_data.each do |row|
+		csv << row
+	end
+end
+
 
 # p CSV.read('/home/assaf/ruby_projects/coinsecrets/results_383644_383648.csv')
 
-h={foo: 1, bar: 2, buzz: 3}
-a=[:foo, :buzz, :bar]
-hbar = {}
-a.each do |key|
-	hbar[key] =h[key]
-end
-p h
-p hbar
+# h={foo: 1, bar: 2, buzz: 3}
+# a=[:foo, :buzz, :bar]
+# hbar = {}
+# a.each do |key|
+# 	hbar[key] =h[key]
+# end
+# p h
+# p hbar
 # def call_api(url)
 # 	Net::HTTP.get(URI(url))		
 # end
-# turl = 'https://bitcoin.toshi.io/api/v0/blocks/326785'
-# csurl = 'http://api.coinsecrets.org/block/353197'
+# turl = 'https://bitcoin.toshi.io/api/v0/blocks/latest'
+
+# # csurl = 'http://api.coinsecrets.org/block/353197'
 # data = ApiCaller.new(turl,true).data
 # json = JSON.parse(data)
-# p json['time']
+# p json["height"]
 # p json['transactions_count']
 
 

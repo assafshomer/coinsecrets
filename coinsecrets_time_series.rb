@@ -7,12 +7,14 @@ require './api_helper'
 coinsecrets_base_url = 'http://api.coinsecrets.org/block/'
 toshi_base_url = 'https://bitcoin.toshi.io/api/v0/blocks/'
 
-num_of_weeks = 1
+num_of_weeks = 10
+num_of_blocks = 6*24*7*num_of_weeks
+# num_of_blocks = 100
+toshi_latest = ApiCaller.new(toshi_base_url+'latest',true).data
+end_block = 382797
+# end_block = JSON.parse(toshi_latest)["height"]
 
-# end_block = 353197
-end_block = 383648
-# num_of_blocks = 6*24*7*num_of_weeks
-num_of_blocks = 100
+
 start_block = end_block - num_of_blocks + 1
 file_name = "results_#{start_block}_#{end_block}"
 
@@ -27,7 +29,7 @@ def order_hash_by_array(hash,keys_array)
 	return hbar
 end
 
-CSV.open(file_name+'.csv',"wb",col_sep: ",") do |csv|
+CSV.open('results/'+file_name+'.csv',"wb",col_sep: ",") do |csv|
 	# csv << ["block","time","data"]
 	headers = []
 	(start_block..end_block).to_a.reverse.map do |b|
@@ -47,9 +49,10 @@ CSV.open(file_name+'.csv',"wb",col_sep: ",") do |csv|
 		headers = headers.uniq
 		ordered_breakdown = order_hash_by_array(breakdown,headers)
 		result = [b,Time.at(response['timestamp'].to_i)]+ordered_breakdown.map{|e| e.last}
-		# p result
+		p result
 		csv << result
 		sleep 1
+		File.write('results/'+file_name+'_headers.txt',["block","time"]+headers)
 	end
 	csv << ["block","time"]+headers	
 end

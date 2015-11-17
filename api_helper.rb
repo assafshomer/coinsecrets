@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'net/http'
+require 'openssl'
 
 class ApiCaller
 	attr_reader :data, :response
