@@ -2,24 +2,14 @@ require 'open-uri'
 require 'net/http'
 require 'json'
 require 'csv'
-require './api_helper'
+require '../helpers/api_helper'
+require '../helpers/headers_helper'
 
 coinsecrets_base_url = 'http://api.coinsecrets.org/block/'
-toshi_base_url = 'https://bitcoin.toshi.io/api/v0/blocks/'
 
-num_of_weeks = 10
-num_of_blocks = 6*24*7*num_of_weeks
-# num_of_blocks = 100
-toshi_latest = ApiCaller.new(toshi_base_url+'latest',true).data
-end_block = 382797
-# end_block = JSON.parse(toshi_latest)["height"]
-
-
-start_block = end_block - num_of_blocks + 1
-file_name = "results_#{start_block}_#{end_block}"
-
-# f = File.open(file_name+'.txt','a+')
-p "This should take #{num_of_blocks/3600} hours. Writing to #{file_name}"
+start_block = ARGV[0].to_i || 323000 # this is the earlies block coinsecrets provide data for
+end_block = start_block+1000000
+file_name = "results_#{start_block}"
 
 def order_hash_by_array(hash,keys_array)
 	hbar = {}
@@ -32,7 +22,7 @@ end
 CSV.open('results/'+file_name+'.csv',"wb",col_sep: ",") do |csv|
 	# csv << ["block","time","data"]
 	headers = []
-	(start_block..end_block).to_a.reverse.map do |b|
+	(start_block..end_block).to_a.map do |b|
 		breakdown, result = {},[]
 		url = coinsecrets_base_url+b.to_s
 		data = ApiCaller.new(url,false).data

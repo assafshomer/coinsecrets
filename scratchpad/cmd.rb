@@ -2,18 +2,36 @@ require 'open-uri'
 require 'net/http'
 require 'json'
 require 'csv'
-require './api_helper'
+require '../helpers/api_helper'
 
-csv_data=CSV.read('coinsecrets.csv');
-csv_data.each{|l| l.shift};
-headers = ["block", "time", "Factom", "unknown", "Ascribe", "Open Assets", "Proof of Existence", "Monegraph", "Eternity Wall", "BlockSign", "Colu", "Omni Layer", "Stampery", "Remembr", "Bitproof", "Blockstore", "CoinSpark", "stampd"]
-CSV.open('coinsecrets.tsv',"wb",col_sep: ",") do |csv|
-	csv << headers
-	csv_data.each do |row|
-		csv << row
-	end
-end
 
+
+# a = ['foo','bar',1,2,3]
+# b = a.select{|x| x.is_a?(Integer)}
+# p a.index(b.first)
+
+
+o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+string = (0...50).map { o[rand(o.length)] }.join
+
+p string
+
+
+
+
+
+# csv_data=CSV.read('coinsecrets.csv');
+# csv_data.each{|l| l.shift};
+# headers = ["block", "time", "Factom", "unknown", "Ascribe", "Open Assets", "Proof of Existence", "Monegraph", "Eternity Wall", "BlockSign", "Colu", "Omni Layer", "Stampery", "Remembr", "Bitproof", "Blockstore", "CoinSpark", "stampd"]
+# CSV.open('coinsecrets.tsv',"wb",col_sep: ",") do |csv|
+# 	csv << headers
+# 	csv_data.each do |row|
+# 		csv << row
+# 	end
+# end
+
+
+# p __dir__
 
 # p CSV.read('/home/assaf/ruby_projects/coinsecrets/results_383644_383648.csv')
 
