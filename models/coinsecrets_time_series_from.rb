@@ -35,8 +35,9 @@ CSV.open('results/'+file_name+'.csv',"wb",col_sep: ",") do |csv|
 		breakdown.keys.each do |k,v| 
 			breakdown['unknown'] = breakdown.delete(k) unless k 
 		end
-		headers += breakdown.keys
-		headers = headers.uniq
+		# headers += breakdown.keys
+		# headers = headers.uniq
+		headers = insert(headers,breakdown.keys)
 		ordered_breakdown = order_hash_by_array(breakdown,headers)
 		result = [b,Time.at(response['timestamp'].to_i)]+ordered_breakdown.map{|e| e.last}
 		p result

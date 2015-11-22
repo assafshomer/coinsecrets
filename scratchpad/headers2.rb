@@ -3,7 +3,7 @@
 
 
 
-initial_size = 10
+initial_size = 20
 
 headers = (1..initial_size).to_a
 

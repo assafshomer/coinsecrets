@@ -11,10 +11,10 @@ require '../helpers/api_helper'
 # p a.index(b.first)
 
 
-o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
-string = (0...50).map { o[rand(o.length)] }.join
+# o = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
+# string = (0...50).map { o[rand(o.length)] }.join
 
-p string
+# p string
 
 
 
@@ -83,12 +83,17 @@ p string
 
 # p result
 
+path = '/home/assaf/ruby_projects/coinsecrets/data/data_384790_384791_data.csv'
+# f= File.open(path,'a+')
+# g = File.open(path+'_1','a+')
+# content = File.read(path)
+# p "content #{content}"
+# g << "foo\n"
+# g << content
 
-# f= File.open('results.txt','a+')
-# (1..10).each do |variable|
-# 	f << 'foo'	
-# end
-
+File.open(path).each do |line|
+	line = line.gsub('"',"")
+end
 
 
 # require 'json'
