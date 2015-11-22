@@ -1,4 +1,4 @@
 old/
-results/
-result*.txt
-result*.csv
+data/*.txt
+data/*.csv
+ 
