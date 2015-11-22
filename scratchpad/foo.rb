@@ -29,9 +29,10 @@
 # h.push('blarg')
 
 # p h 
+# a= ["#56AE7C", "#72C39B", "#80CCB3", "#7FC7C6", "#7FBBCF", "#80A8CE", "#8897CE", "#9788CD", "#AA81C5", "#C280B7", "#D3779F", "#DC647E", "#E16167", "#E2705C", "#E38457", "#E29D58", "#E0B15B", "#DDC05E", "#E3CF6D", "#F2DE8A"]
 
-a = (1..10).to_a
+# p a.reverse
 
-p a.shift(2)
+# p Time.at(1445443626)
 
-p a
+a = (1..30).to_a.each_slice(3){|g| p g}
