@@ -25,5 +25,13 @@ module HeadersHelper
 	def get_placeholders(array)
 		array.select{|x| x.is_a?(Integer)}
 	end
+	
+	def order_hash_by_array(hash,keys_array)
+		hbar = {}
+		keys_array.each do |key|
+			hbar[key] =hash[key]
+		end
+		return hbar
+	end	
 
 end

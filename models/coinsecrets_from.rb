@@ -15,33 +15,27 @@ toshi_latest = ApiCaller.new(toshi_base_url+'latest',true).data
 
 end_block = ARGV[0].to_i || JSON.parse(toshi_latest)["height"]
 
-num_of_blocks = ARGV[1].to_i || 6*24*365/3 
+num_of_blocks = ARGV[1].to_i-1 || 6*24*365/3 
 
 start_block = end_block - num_of_blocks
 
-# headers = ["date"]+(1..30).to_a
-headers = ["date", "Factom", "unknown", "Proof of Existence", "Open Assets", "Colu", "Blockstore", "Eternity Wall", "Ascribe", "Monegraph", "Stampery", "Omni Layer", "Bitproof", "CoinSpark", "LaPreuve", "BlockSign", "Remembr", "stampd", 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+headers = ["date", "Factom", "unknown", "Proof of Existence", "Open Assets", "Colu", "Blockstore", "Eternity Wall", "Ascribe", "Monegraph", "Stampery", "Omni Layer", "Bitproof", "CoinSpark", "LaPreuve", "BlockSign", "Remembr", "stampd", "Crypto Copyright", "OriginalMy", 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
 
-dir_name = "#{start_block}_#{end_block}"
+# dir_name = "#{start_block}_#{end_block}"
+dir_name = 'processing'
 file_name = "data"
 file_dir = "data/#{dir_name}/"
 FileUtils.mkdir_p(file_dir)
-
-def order_hash_by_array(hash,keys_array)
-	hbar = {}
-	keys_array.each do |key|
-		hbar[key] =hash[key]
-	end
-	return hbar
-end
-
 data_path = file_dir+'data.tsv'
-older_file_path = 'data/result.tsv'
+base_file_path = 'data/data.tsv'
 headers_path = file_dir+'headers.txt'
 block_path = file_dir+'block.tsv'
+blocks_path = 'data/blocks.tsv'
+tmp_path = 'data/tmp.tsv'
 clean_headers_path = file_dir+'clean_headers.txt'
 result_path = file_dir+'result.tsv'
 views_path = __dir__+'/../views/data/data.tsv'
+system "find #{file_dir} -mindepth 1 -delete"
 
 CSV.open(data_path,"wb",col_sep: "\t") do |csv|
 	CSV.open(block_path,"wb") do |bcsv|	
@@ -72,13 +66,19 @@ CSV.open(data_path,"wb",col_sep: "\t") do |csv|
 			end			
 		end
 	end
-	# csv << ["date"]+headers	
 end
 
 CSV.open(clean_headers_path,"wb",col_sep: "\t") do |csv|
 	csv << headers
 end
 
-system "cat #{older_file_path} #{data_path} > #{result_path}"
+system "cat #{base_file_path} #{data_path} > #{result_path}"
+system "cp #{result_path} #{base_file_path}"
+system "cp #{base_file_path} #{views_path}"
+system "cat #{blocks_path} #{block_path} > #{tmp_path}"
+system "cp #{tmp_path} #{blocks_path}"
 
-system "cp #{result_path} #{views_path}"
+# system "cat #{base_file_path} #{data_path} > #{result_path}"
+
+# system "cp #{result_path} #{views_path}"
+
