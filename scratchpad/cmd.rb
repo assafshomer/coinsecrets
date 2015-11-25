@@ -3,6 +3,27 @@ require 'net/http'
 require 'json'
 require 'csv'
 require '../helpers/api_helper'
+require '../helpers/arrays_helper'
+require '../helpers/headers_helper'
+
+include HeadersHelper
+include ArraysHelper
+
+data_path = '/home/assaf/ruby_projects/coinsecrets/data/data.tsv'
+aggreagted_path = '/home/assaf/ruby_projects/coinsecrets/data/agg_data.tsv'
+
+data = CSV.read(data_path,col_sep: "\t")
+
+data_nested_array = group_by_days(data)
+
+CSV.open(aggreagted_path,"wb",col_sep: "\t") do |csv|
+	# csv << ["Protocol","Transactions"]
+	data_nested_array.each do |row|
+		csv << row
+	end
+end
+
+
 
 
 
@@ -83,17 +104,17 @@ require '../helpers/api_helper'
 
 # p result
 
-path = '/home/assaf/ruby_projects/coinsecrets/data/data_384790_384791_data.csv'
-# f= File.open(path,'a+')
-# g = File.open(path+'_1','a+')
-# content = File.read(path)
-# p "content #{content}"
-# g << "foo\n"
-# g << content
+# path = '/home/assaf/ruby_projects/coinsecrets/data/data_384790_384791_data.csv'
+# # f= File.open(path,'a+')
+# # g = File.open(path+'_1','a+')
+# # content = File.read(path)
+# # p "content #{content}"
+# # g << "foo\n"
+# # g << content
 
-File.open(path).each do |line|
-	line = line.gsub('"',"")
-end
+# File.open(path).each do |line|
+# 	line = line.gsub('"',"")
+# end
 
 
 # require 'json'

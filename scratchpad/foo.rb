@@ -1,3 +1,45 @@
+require 'time'
+require 'matrix'
+
+a=[1,2,3]
+a.shift
+
+p a
+
+# s = "2015-10-21 00:53"
+
+# t= Time.parse(s)
+
+# p t.strftime "%Y-%m-%d"
+
+
+# test = [['a',1,2,3],['a',2,3,4],['b',3,3,3]]
+
+# dates = test.map{|t| t.first}.uniq
+
+# # p dates
+
+# # dates.map{|d| Vector.elements(d) + Vector.elements(element) }
+
+# # test.ijnect([]){ |result, element| result + element }
+
+# # p Vector.elements(test[0])+Vector.elements(test[1])
+
+# # p test.inject { |result, element|  Vector.elements(result) +  Vector.elements(element) }
+
+# aggr = dates.map{|d| test.select{|e| e.first == d}}.each{|e| e.each{|x| x.shift}}
+
+# p "aggr #{aggr}"
+
+# p aggr.map{|e| e.inject{ |result, element| Vector.elements(result) + Vector.elements(element) }.to_a}
+
+
+# x = [1,2,3]
+
+# p x.unshift('a')
+
+# p dates.map{|d| test.select{|e| e.first == d}}.each{|e| e.each{|x| x.shift}}.map{|x| x.inject { |result, element|  Vector.elements(result) +  Vector.elements(element) }}
+
 # foo = %W(AgeingAidsAnimal WelfareBird FluBSECoal PitsEUCountrysideCrimeDefenceDrug AbuseEconomyEducationFarmingGerman ReunificationGM foodsHousingInflation/PricesInner CitiesLocal GovtLow PayMoralityNHSNorthern IrelandNuclear PowerNuclear WeaponsPensionsFuel PricesEnvironmentThe PoundPoverty/InequalityPrivatisationPublic ServicesImmigrationScots/Welsh AssemblyTaxationTrade UnionsTransportTsunamiUnemploymen)
 
 # p foo.size
@@ -35,4 +77,4 @@
 
 # p Time.at(1445443626)
 
-a = (1..30).to_a.each_slice(3){|g| p g}
+# a = (1..30).to_a.each_slice(3){|g| p g}

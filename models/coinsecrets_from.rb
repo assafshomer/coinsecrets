@@ -60,7 +60,7 @@ CSV.open(data_path,"wb",col_sep: "\t") do |csv|
 				result = [timestamp]+ordered_breakdown.map{|e| e.last}
 				p [b]+result
 				bcsv << [b]+result
-				csv << result
+				csv << result unless result.first =~ /\A1970-01-01/
 				sleep 1			
 				File.write(headers_path,headers)
 			end			
