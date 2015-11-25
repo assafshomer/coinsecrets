@@ -28,11 +28,17 @@ describe "ArraysHelper" do
 		  it 'should sum each category and add the category name' do
 		  	sum_by_category(data,categories).should == [[3,5,7],[3,3,3]]
 		  end
+		  it 'should add the sum' do
+		  	sum_by_category(data,categories,{sum: true}).should == [[3,5,7,15],[3,3,3,9]]
+		  end		  
 		end
 		describe 'group_by_first_element' do
 		  it 'should sum elements grouped by first item of each' do
 		  	group_by_first_element(data).should == [['a',3,5,7],['b',3,3,3]]
 		  end	  
+		  it 'should add the sum' do
+		  	group_by_first_element(data,{sum: true}).should == [['a',3,5,7,15],['b',3,3,3,9]]
+		  end		  
 		end	  
 	end
 
@@ -42,6 +48,13 @@ describe "ArraysHelper" do
 	  end
 	end
 
+	# describe 'insert total' do
+	# 	let!(:nosum) { [['a',3,5,7],['b',3,3,3]] }
+	# 	it 'should add the sum category' do
+	#   	insert_total(nosum).should == [['a',3,5,7,15],['b',3,3,3,9]]
+	# 	end
+	# end
+
 	describe 'grouping by days' do
 	  let(:expected_path) { 'spec/fixtures/test_sum.tsv' }
 	  let(:expected) { CSV.read(expected_path,col_sep: "\t") }
@@ -49,5 +62,13 @@ describe "ArraysHelper" do
 	  	group_by_days(csv_data).should == expected
 	  end
 	end
+
+	describe 'grouping by days with total' do
+	  let(:total_path) { 'spec/fixtures/test_total.tsv' }
+	  let(:total) { CSV.read(total_path,col_sep: "\t") }
+	  it 'should convert time to days only' do
+	  	group_by_days(csv_data,{sum: true}).should == total
+	  end
+	end	
 
 end

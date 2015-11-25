@@ -7,11 +7,11 @@ include HeadersHelper
 include ArraysHelper
 
 data_path = '/home/assaf/ruby_projects/coinsecrets/data/data.tsv'
-aggreagted_path = '/home/assaf/ruby_projects/coinsecrets/data/agg_data.tsv'
+aggreagted_path = '/home/assaf/ruby_projects/coinsecrets/data/agg_data_with_sum.tsv'
 
 data = CSV.read(data_path,col_sep: "\t")
 
-data_nested_array = group_by_days(data)
+data_nested_array = group_by_days(data,{sum: true})
 
 CSV.open(aggreagted_path,"wb",col_sep: "\t") do |csv|
 	# csv << ["Protocol","Transactions"]

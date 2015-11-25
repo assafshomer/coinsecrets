@@ -18,24 +18,29 @@ module ArraysHelper
 		array.map { |e| e.to_i }
 	end
 
-	def sum_by_category(array,categories)
+	def sum_by_category(array,categories,opts={})
 		aggregated_data = aggregate_by_category(array,categories)
-		aggregated_data.map do |category_data|
-			category_data.inject do |result, element|				
-				Vector.elements(integerize(result)) + Vector.elements(integerize(element))
-			end.to_a
+		result = aggregated_data.map do |category_data|
+			vector_sum(category_data,opts)
 		end
 	end
 
-	def group_by_first_element(array)
-		categories = get_categories(array)
-		categorized_data = sum_by_category(array,categories)
+	def vector_sum(array,opts={})
+		data = array.inject do |result, element|				
+			Vector.elements(integerize(result)) + Vector.elements(integerize(element))
+		end.to_a
+		opts[:sum] ? data << data.inject(&:+) : data
+	end
+
+	def group_by_first_element(array,opts={})
+		categories = get_categories(array)		
+		categorized_data = sum_by_category(array,categories,opts)		
 		categories.zip(categorized_data).map{|e| e.flatten}
 	end
 
 	def zoom_out_to_days(array)
 		days =  array.each_with_index.map do |line,index|
-			if index == 0 # leave headers along
+			if index == 0 # leave headers alone
 				line
 			else				
 				line.each_with_index.map do |x,i|
@@ -49,15 +54,22 @@ module ArraysHelper
 		end		
 	end
 
-	def group_by_days(array)
+	def group_by_days(array,opts={})
 		array_by_date = zoom_out_to_days(array)
 		days = get_categories(array_by_date, {csv: true})
-		categorized_data = sum_by_category(array_by_date,days)
+		categorized_data = sum_by_category(array_by_date,days,opts)
 		result = days.zip(categorized_data).map{|e| e.flatten}
-		result = result.map{|e| e.map{|x| x.to_s}}
-		[array.first] + result
+		result = result.map{|e| e.map{|x| x.to_s.strip}}
+		labels = opts[:sum] ? array.first + ["Total"] : array.first
+		[labels] + result
 	end
 
-
+	# def insert_total(categorized_array)
+	# 	categories = categorized_array.map{|e| e.shift}
+	# 	sum = vector_sum(categorized_array)
+	# 	extended_categories = ['total']+categories
+	# 	extended_data = categorized_array.unshift(sum)
+	# 	extended_categories.zip(extended_data).map{|e| e.flatten}
+	# end
 
 end

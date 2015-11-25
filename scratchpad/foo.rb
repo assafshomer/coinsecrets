@@ -2,9 +2,17 @@ require 'time'
 require 'matrix'
 
 a=[1,2,3]
-a.shift
+
+p a.inject(&:+)
+p a.shift
 
 p a
+
+
+s = ' a   b '
+
+p s.strip
+
 
 # s = "2015-10-21 00:53"
 
