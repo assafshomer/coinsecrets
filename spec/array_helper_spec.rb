@@ -30,7 +30,10 @@ describe "ArraysHelper" do
 		  end
 		  it 'should add the sum' do
 		  	sum_by_category(data,categories,{sum: true}).should == [[3,5,7,15],[3,3,3,9]]
-		  end		  
+		  end
+		  it 'should add the commulate' do
+		  	sum_by_category(data,categories,{sum: true, cum: true}).should == [[3,5,7,15,24],[3,3,3,9,15]]		  	
+		  end
 		end
 		describe 'group_by_first_element' do
 		  it 'should sum elements grouped by first item of each' do
@@ -69,6 +72,20 @@ describe "ArraysHelper" do
 	  it 'should convert time to days only' do
 	  	group_by_days(csv_data,{sum: true}).should == total
 	  end
+	end
+	describe 'grouping by days with commulate' do
+	  let(:cummulate_path) { 'spec/fixtures/test_cummulate.tsv' }
+	  let(:cummulate) { CSV.read(cummulate_path,col_sep: "\t") }
+	  it 'should convert time to days only' do
+	  	group_by_days(csv_data,{sum: true, cum: true}).should == cummulate
+	  end
 	end	
+	describe 'vector_sum' do
+	  let!(:a) { [[1,2,3],[4,5,6]] }
+	  it 'shoud sum as vectors' do
+	  	vector_sum(a).should == [5,7,9]
+	  end
+	end
+
 
 end

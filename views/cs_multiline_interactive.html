@@ -169,7 +169,7 @@ d3.tsv("data/data.tsv", function(error, data) {
           rating: +(d[name]),
           };
       }),
-      visible: (name === "Colu" ? true : false) // "visible": all false except for economy which is true.
+      visible: ((name === "Colu" || name === 'Total') ? true : false) // "visible": all false except for economy which is true.
     };
   });
 
@@ -329,7 +329,7 @@ d3.tsv("data/data.tsv", function(error, data) {
             .attr("x", width - 150) // hover date text position
             .style("fill", "#E6E7E8");
 
-  var columnNames = d3.keys(data[0]) //grab the key values from your first data row
+  var columnNames = d3.keys(data[0])//data[0]) //grab the key values from your first data row
                                      //these are the same as your column names
                   .slice(1); //remove the first column name (`date`);
 
@@ -345,7 +345,7 @@ d3.tsv("data/data.tsv", function(error, data) {
 
   // Add mouseover events for hover line.
   d3.select("#mouse-tracker") // select chart plot background rect #mouse-tracker
-  .on("mousemove", mousemove) // on mousemove activate mousemove function defined below
+  // .on("mousemove", mousemove) // on mousemove activate mousemove function defined below
   .on("mouseout", function() {
       hoverDate
           .text(null) // on mouseout remove text for hover date
@@ -392,29 +392,29 @@ d3.tsv("data/data.tsv", function(error, data) {
       });
   }; 
 
-  //for brusher of the slider bar at the bottom
-  function brushed() {
+  // //for brusher of the slider bar at the bottom
+  // function brushed() {
 
-    xScale.domain(brush.empty() ? xScale2.domain() : brush.extent()); // If brush is empty then reset the Xscale domain to default, if not then make it the brush extent 
+  //   xScale.domain(brush.empty() ? xScale2.domain() : brush.extent()); // If brush is empty then reset the Xscale domain to default, if not then make it the brush extent 
 
-    svg.select(".x.axis") // replot xAxis with transition when brush used
-          .transition()
-          .call(xAxis);
+  //   svg.select(".x.axis") // replot xAxis with transition when brush used
+  //         .transition()
+  //         .call(xAxis);
 
-    maxY = findMaxY(categories); // Find max Y rating value categories data with "visible"; true
-    yScale.domain([0,maxY]); // Redefine yAxis domain based on highest y value of categories data with "visible"; true
+  //   maxY = findMaxY(categories); // Find max Y rating value categories data with "visible"; true
+  //   yScale.domain([0,maxY]); // Redefine yAxis domain based on highest y value of categories data with "visible"; true
     
-    svg.select(".y.axis") // Redraw yAxis
-      .transition()
-      .call(yAxis);   
+  //   svg.select(".y.axis") // Redraw yAxis
+  //     .transition()
+  //     .call(yAxis);   
 
-    issue.select("path") // Redraw lines based on brush xAxis scale and domain
-      .transition()
-      .attr("d", function(d){
-          return d.visible ? line(d.values) : null; // If d.visible is true then draw line for this d selection
-      });
+  //   issue.select("path") // Redraw lines based on brush xAxis scale and domain
+  //     .transition()
+  //     .attr("d", function(d){
+  //         return d.visible ? line(d.values) : null; // If d.visible is true then draw line for this d selection
+  //     });
     
-  };      
+  // };      
 
 }); // End Data callback function
   

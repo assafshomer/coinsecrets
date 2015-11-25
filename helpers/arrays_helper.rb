@@ -23,7 +23,14 @@ module ArraysHelper
 		result = aggregated_data.map do |category_data|
 			vector_sum(category_data,opts)
 		end
+		opts[:cum] ? add_cumulate(result) : result
 	end
+
+	def add_cumulate(array)
+		sums = array.map{|e| e.last}
+		cum = sums.cumulative_sum
+		array.zip(cum.reverse).map{|e| e.flatten}
+	end	
 
 	def vector_sum(array,opts={})
 		data = array.inject do |result, element|				
@@ -57,10 +64,12 @@ module ArraysHelper
 	def group_by_days(array,opts={})
 		array_by_date = zoom_out_to_days(array)
 		days = get_categories(array_by_date, {csv: true})
-		categorized_data = sum_by_category(array_by_date,days,opts)
-		result = days.zip(categorized_data).map{|e| e.flatten}
+		categorized_data = sum_by_category(array_by_date,days,opts)		
+		result = days.zip(categorized_data).map{|e| e.flatten}		
 		result = result.map{|e| e.map{|x| x.to_s.strip}}
-		labels = opts[:sum] ? array.first + ["Total"] : array.first
+		array.first << "31" if opts[:sum]
+		labels = opts[:sum] ? array.first << "Total" : array.first
+		labels = opts[:sum] && opts[:cum] ? array.first << "Cummulative" : array.first
 		[labels] + result
 	end
 
@@ -72,4 +81,11 @@ module ArraysHelper
 	# 	extended_categories.zip(extended_data).map{|e| e.flatten}
 	# end
 
+end
+
+class Array
+  def cumulative_sum
+    sum = 0
+    self.map{|x| sum += x}
+  end
 end

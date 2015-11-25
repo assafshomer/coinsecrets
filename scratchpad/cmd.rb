@@ -9,6 +9,11 @@ require '../helpers/headers_helper'
 include HeadersHelper
 include ArraysHelper
 
+
+data = [['a',1,2,3],['a',2,3,4],['b',3,3,3]]
+cats = ['a','b']
+foo_by_category(data,categories,{sum: true, com: true}).should == [[3,5,7,15,15],[3,3,3,9,24]]
+
 # data_path = '/home/assaf/ruby_projects/coinsecrets/data/data.tsv'
 # aggreagted_path = '/home/assaf/ruby_projects/coinsecrets/data/agg_data.tsv'
 
@@ -23,11 +28,11 @@ include ArraysHelper
 # 	end
 # end
 
-path = '/home/assaf/ruby_projects/coinsecrets/data/agg_data_with_sum.tsv'
-data = CSV.read(path,col_sep: "\t")
+# path = '/home/assaf/ruby_projects/coinsecrets/data/agg_data_with_sum.tsv'
+# data = CSV.read(path,col_sep: "\t")
 
-p data.first.count
-p data[1].count
+# p data.first.count
+# p data[1].count
 
 
 
