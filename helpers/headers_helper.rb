@@ -9,6 +9,11 @@ module HeadersHelper
 		headers + new_keys + placeholders
 	end
 
+	def complete(new_keys_array)
+		base = ["date"]+(1..30).to_a
+		insert(base,new_keys_array)
+	end
+
 	def find_new_keys(array, candidate_keys)
 		candidate_keys - (array & candidate_keys)
 	end

@@ -5,14 +5,25 @@ require 'csv'
 require '../helpers/api_helper'
 require '../helpers/arrays_helper'
 require '../helpers/headers_helper'
-
+require 'fileutils'
 include HeadersHelper
 include ArraysHelper
 
 
-data = [['a',1,2,3],['a',2,3,4],['b',3,3,3]]
-cats = ['a','b']
-foo_by_category(data,categories,{sum: true, com: true}).should == [[3,5,7,15,15],[3,3,3,9,24]]
+p 10.times.each_slice(2)
+
+# path = '/home/assaf/ruby_projects/coinsecrets/data/processing/headers.txt'
+# p File.read(path).to_a
+
+
+
+# path = '/home/assaf/ruby_projects/coinsecrets/data/processing/clean_headers.txt'
+# # path = '/home/assaf/ruby_projects/coinsecrets/data/379905_384799/clean_headers.txt'
+# p CSV.read(path,col_sep: "\t").flatten
+
+# data = [['a',1,2,3],['a',2,3,4],['b',3,3,3]]
+# cats = ['a','b']
+# foo_by_category(data,categories,{sum: true, com: true}).should == [[3,5,7,15,15],[3,3,3,9,24]]
 
 # data_path = '/home/assaf/ruby_projects/coinsecrets/data/data.tsv'
 # aggreagted_path = '/home/assaf/ruby_projects/coinsecrets/data/agg_data.tsv'

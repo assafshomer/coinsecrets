@@ -29,7 +29,9 @@ module ArraysHelper
 	def add_cumulate(array)
 		sums = array.map{|e| e.last}
 		cum = sums.cumulative_sum
-		array.zip(cum.reverse).map{|e| e.flatten}
+		max = cum.max
+		cum = cum.map{|c| max - c}
+		array.zip(cum).map{|e| e.flatten}
 	end	
 
 	def vector_sum(array,opts={})
@@ -67,9 +69,9 @@ module ArraysHelper
 		categorized_data = sum_by_category(array_by_date,days,opts)		
 		result = days.zip(categorized_data).map{|e| e.flatten}		
 		result = result.map{|e| e.map{|x| x.to_s.strip}}
-		array.first << "31" if opts[:sum]
-		labels = opts[:sum] ? array.first << "Total" : array.first
-		labels = opts[:sum] && opts[:cum] ? array.first << "Cummulative" : array.first
+		# array.first << "31" if opts[:sum]
+		labels = opts[:sum] ? array.first << "TOTAL" : array.first
+		labels = opts[:sum] && opts[:cum] ? array.first << "CUMMULATIVE" : array.first
 		[labels] + result
 	end
 
