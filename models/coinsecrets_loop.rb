@@ -4,6 +4,7 @@ num_of_loops = num_of_blocks/slice_size
 
 path = __dir__+'/coinsecrets_from.rb'
 p "Looping #{num_of_loops} times, each time with slice of size #{slice_size}"
-num_of_loops.times do
+num_of_loops.times do |n|
+	p "loop number #{n}, (another #{num_of_loops-n} to go)"
 	system "ruby #{path} #{slice_size}"
 end

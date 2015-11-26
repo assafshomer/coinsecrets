@@ -77,8 +77,8 @@ CSV.open(data_path,"wb",col_sep: "\t") do |csv|
 				csv << result unless result.first =~ /\A1970-01-01/
 				sleep 1			
 				File.write(headers_path,headers)
-				File.write(last_block_path,b)
-			end			
+			end
+			File.write(last_block_path,b)
 		end
 	end
 end
